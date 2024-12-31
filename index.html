@@ -19,26 +19,79 @@
         th {
             background-color: #f2f2f2;
         }
+        input, button, select {
+            padding: 8px;
+            margin: 10px 0;
+        }
+        #studentTableSection {
+            display: none; /* Initially hide the student table */
+        }
     </style>
 </head>
 <body>
     <h1>Student Results</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Roll No</th>
-                <th>Name</th>
-                <th>Sem 1 (Jan 2023)</th>
-                <th>Sem 2 (May 2023)</th>
-                <th>Sem 3 (Nov 2023)</th>
-                <th>Sem 4 (Apr 2024)</th>
-                <th>Sem 5 (Nov 2024)</th>
-            </tr>
-        </thead>
-        <tbody id="studentTable">
-            <!-- Rows will be generated dynamically -->
-        </tbody>
-    </table>
+
+    <!-- Input section for Reg No and Sem No -->
+    <div>
+        <h3>Generate Result Link</h3>
+        <label for="regNo">Enter Registration Number:</label>
+        <input type="text" id="regNo" placeholder="Enter Registration Number" />
+        <label for="semNo">Enter Semester Number:</label>
+        <input type="number" id="semNo" placeholder="Enter Semester Number (1-5)" />
+        
+        <!-- Dropdown for Month Selection -->
+        <label for="monthSelect">Select Month:</label>
+        <select id="monthSelect">
+            <option value="JAN">JAN</option>
+            <option value="MAY">MAY</option>
+            <option value="NOV">NOV</option>
+            <option value="APR">APR</option>
+        </select>
+
+        <!-- Dropdown for Year Selection -->
+        <label for="yearSelect">Select Year:</label>
+        <select id="yearSelect">
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+			<option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+        </select>
+
+        <button onclick="generateResultLink()">Generate Result Link</button>
+    </div>
+
+    <!-- Password input to show the student table -->
+    <div>
+        <h3>Enter Password to View CSE CS Table</h3>
+        <input type="password" id="passwordInput" placeholder="Enter Password" />
+        <button onclick="checkPassword()">Submit Password</button>
+    </div>
+
+    <!-- Dropdown to show/hide student table -->
+    <button id="toggleTableButton" style="display:none;" onclick="toggleStudentTable()">CSE CS</button>
+
+    <!-- Student List Table Section -->
+    <div id="studentTableSection">
+        <h3>Student List</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Roll No</th>
+                    <th>Name</th>
+                    <th>Sem 1 (Jan 2023)</th>
+                    <th>Sem 2 (May 2023)</th>
+                    <th>Sem 3 (Nov 2023)</th>
+                    <th>Sem 4 (Apr 2024)</th>
+                    <th>Sem 5 (Nov 2024)</th>
+                </tr>
+            </thead>
+            <tbody id="studentTable">
+                <!-- Dynamic student data will be injected here -->
+            </tbody>
+        </table>
+    </div>
 
     <script>
         const students = [
@@ -147,6 +200,37 @@
 
             tableBody.appendChild(row);
         });
+
+        function toggleStudentTable() {
+            const tableSection = document.getElementById("studentTableSection");
+            tableSection.style.display = tableSection.style.display === "none" ? "block" : "none";
+        }
+
+        function checkPassword() {
+            const enteredPassword = document.getElementById("passwordInput").value;
+            const correctPassword = "Tarun@123";
+            if (enteredPassword === correctPassword) {
+                document.getElementById("toggleTableButton").style.display = "inline-block";
+                alert("Password correct! You can now access the table.");
+            } else {
+                alert("Incorrect password. Please try again.");
+            }
+        }
+
+        function generateResultLink() {
+            const regNo = document.getElementById("regNo").value;
+            const semNo = document.getElementById("semNo").value;
+            const month = document.getElementById("monthSelect").value;
+            const year = document.getElementById("yearSelect").value;
+
+            const resultLink = `https://onlinecertificates.gitam.edu/View_Result_Grid2.aspx?QT=QRCODE$${regNo}$${semNo}$${month}$${year}$R`;
+
+            // Open the generated link in a new tab
+            const link = document.createElement('a');
+            link.href = resultLink;
+            link.target = '_blank';
+            link.click();
+        }
     </script>
 </body>
 </html>
