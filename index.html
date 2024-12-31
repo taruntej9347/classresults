@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Results</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Student Results</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Roll No</th>
+                <th>Name</th>
+                <th>Sem 1 (Jan 2023)</th>
+                <th>Sem 2 (May 2023)</th>
+                <th>Sem 3 (Nov 2023)</th>
+                <th>Sem 4 (Apr 2024)</th>
+                <th>Sem 5 (Nov 2024)</th>
+            </tr>
+        </thead>
+        <tbody id="studentTable">
+            <!-- Rows will be generated dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        const students = [
+            { rollNo: "BU21CSEN0400236", name: "Palli Arshitha V" },
+            { rollNo: "BU22CSEN0400031", name: "P Ahammed Sahid" },
+            { rollNo: "BU22CSEN0400035", name: "Konakondla Phaniraju" },
+            { rollNo: "BU22CSEN0400036", name: "R Kishor Reddy" },
+            { rollNo: "BU22CSEN0400045", name: "Muppuri Venkat Aryan Chowdary" },
+            { rollNo: "BU22CSEN0400049", name: "Ediga Rajesh Goud" },
+            { rollNo: "BU22CSEN0400065", name: "Munagala Venkata Nandini" },
+            { rollNo: "BU22CSEN0400071", name: "Gevireddi Gari Srishanth" },
+            { rollNo: "BU22CSEN0400075", name: "E Sai Pavan" },
+            { rollNo: "BU22CSEN0400117", name: "Bontha Vishwanath Gowd" },
+            { rollNo: "BU22CSEN0400119", name: "K Sai Siddhartha" },
+            { rollNo: "BU22CSEN0400122", name: "Bhumireddy Vamsi Ankal Reddy" },
+            { rollNo: "BU22CSEN0400124", name: "Netapalli Koushik Madhav" },
+            { rollNo: "BU22CSEN0400125", name: "Mohammed Mehraj Ahmed" },
+            { rollNo: "BU22CSEN0400126", name: "Singana Uday Sree" },
+            { rollNo: "BU22CSEN0400127", name: "Appakondu Vyshnavi" },
+            { rollNo: "BU22CSEN0400129", name: "Thammineni Mahesh" },
+            { rollNo: "BU22CSEN0400136", name: "Kaditham Gowtham" },
+            { rollNo: "BU22CSEN0400139", name: "Allam Bhuvan Saireddy" },
+            { rollNo: "BU22CSEN0400144", name: "Juturu Sree Valli" },
+            { rollNo: "BU22CSEN0400145", name: "Karipireddy Charan Teja Reddy" },
+            { rollNo: "BU22CSEN0400146", name: "Raja Anand Lasya" },
+            { rollNo: "BU22CSEN0400147", name: "Vemulapati Deveswar" },
+            { rollNo: "BU22CSEN0400149", name: "Panguluri Vishnuvardhan Babu" },
+            { rollNo: "BU22CSEN0400150", name: "U Dasharam" },
+            { rollNo: "BU22CSEN0400151", name: "Nuthanapati Charan" },
+            { rollNo: "BU22CSEN0400155", name: "Lavanuru Harshavardhan" },
+            { rollNo: "BU22CSEN0400162", name: "Kandukuri Vishnu Vardhan Reddy" },
+            { rollNo: "BU22CSEN0400163", name: "Rayala Sidhartha Chowdary" },
+            { rollNo: "BU22CSEN0400165", name: "Padubandla Mohan Krishna" },
+            { rollNo: "BU22CSEN0400169", name: "Vallapaneni Bharath Naidu" },
+            { rollNo: "BU22CSEN0400171", name: "Panditi Roshan Kumar" },
+            { rollNo: "BU22CSEN0400172", name: "Koyi Mahesh" },
+            { rollNo: "BU22CSEN0400175", name: "Mukesh Reddy Vennapoosa" },
+            { rollNo: "BU22CSEN0400184", name: "Karna Pranav Kumar Reddy" },
+            { rollNo: "BU22CSEN0400185", name: "Sristi Mukherjee" },
+            { rollNo: "BU22CSEN0400186", name: "Papasani Ganesh" },
+            { rollNo: "BU22CSEN0400189", name: "Bestha Devi Prasad" },
+            { rollNo: "BU22CSEN0400190", name: "Karthik Lingaladinne" },
+            { rollNo: "BU22CSEN0400211", name: "Manu Gowda" },
+            { rollNo: "BU22CSEN0400217", name: "Gayathri Y N" },
+            { rollNo: "BU22CSEN0400218", name: "P Aswanth" },
+            { rollNo: "BU22CSEN0400224", name: "Yerraguntla Madhu Sudhan" },
+            { rollNo: "BU22CSEN0400226", name: "NAWAF MOHAMMED ABDULLAH AL KATHER" },
+            { rollNo: "BU22CSEN0400227", name: "GURRAMPATI VENKATA SATHISH KUMAR REEDY" },
+            { rollNo: "BU22CSEN0400228", name: "Kondoju Likhitha" },
+            { rollNo: "BU22CSEN0400230", name: "Keerthana M" },
+            { rollNo: "BU22CSEN0400241", name: "G L N Sai Srikar Sharma" },
+            { rollNo: "BU22CSEN0400255", name: "K S Rakshitha" },
+            { rollNo: "BU22CSEN0400257", name: "S Anuragh Varma" },
+            { rollNo: "BU22CSEN0400258", name: "Ranjith Gowda B M" },
+            { rollNo: "BU22CSEN0400260", name: "Deekshith G N" },
+            { rollNo: "BU22CSEN0400261", name: "Tammineni Narasimha Naidu" },
+            { rollNo: "BU22CSEN0400263", name: "Rakesh E" },
+            { rollNo: "BU22CSEN0400268", name: "Nayan G R" },
+            { rollNo: "BU22CSEN0400269", name: "A S Kasturi" },
+            { rollNo: "BU22CSEN0400270", name: "Bandi Dhananjaya Reddy" },
+            { rollNo: "BU22CSEN0400271", name: "Ezeude Godson Onyedika" },
+            { rollNo: "BU22CSEN0400272", name: "M Jyotish Kumar" },
+            { rollNo: "BU22CSEN0400274", name: "Abhilash Reddy G L" },
+            { rollNo: "BU22CSEN0400275", name: "Rohith Reddy Y" },
+            { rollNo: "BU22CSEN0400276", name: "Vasa Hemesh" },
+            { rollNo: "BU22CSEN0400277", name: "Manish Siva" },
+            { rollNo: "BU22CSEN0400278", name: "Jeevan G M" },
+            { rollNo: "BU22CSEN0400279", name: "Singareddy Ruthish Reddy" },
+            { rollNo: "BU22CSEN0400280", name: "H Basavaprabhu" },
+            { rollNo: "BU22CSEN0400287", name: "Kota Bhargav" },
+            { rollNo: "BU22CSEN0400288", name: "P Neha Chowdary" },
+            { rollNo: "BU22CSEN0400289", name: "Bille Tarun Tej" },
+            { rollNo: "BU22CSEN0400291", name: "Isaac Emmanuel X" }
+        ];
+
+        const semesters = [
+            { id: 1, month: "JAN", year: "2023" },
+            { id: 2, month: "MAY", year: "2023" },
+            { id: 3, month: "NOV", year: "2023" },
+            { id: 4, month: "APR", year: "2024" },
+            { id: 5, month: "NOV", year: "2024" }
+        ];
+
+        const tableBody = document.getElementById("studentTable");
+
+        students.forEach(student => {
+            const row = document.createElement("tr");
+
+            // Roll No and Name columns
+            row.innerHTML = `
+                <td>${student.rollNo}</td>
+                <td>${student.name}</td>
+            `;
+
+            // Semester result links
+            semesters.forEach(sem => {
+                const resultLink = `
+                    <td>
+                        <a href="https://onlinecertificates.gitam.edu/View_Result_Grid2.aspx?QT=QRCODE$${student.rollNo}$${sem.id}$${sem.month}$${sem.year}$R" target="_blank">
+                            Sem ${sem.id}
+                        </a>
+                    </td>
+                `;
+                row.innerHTML += resultLink;
+            });
+
+            tableBody.appendChild(row);
+        });
+    </script>
+</body>
+</html>
